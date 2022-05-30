@@ -422,8 +422,8 @@ Error ENetMultiplayerPeer::get_packet(const uint8_t **r_buffer, int &r_buffer_si
 	current_packet = incoming_packets.front()->get();
 	incoming_packets.pop_front();
 
-	*r_buffer = (const uint8_t *)(&current_packet.packet->data[8]);
-	r_buffer_size = current_packet.packet->dataLength - 8;
+	*r_buffer = (const uint8_t *)(&current_packet.packet->data[0]);
+	r_buffer_size = current_packet.packet->dataLength;
 
 	return OK;
 }
@@ -462,10 +462,10 @@ Error ENetMultiplayerPeer::put_packet(const uint8_t *p_buffer, int p_buffer_size
 	}
 #endif
 
-	ENetPacket *packet = enet_packet_create(nullptr, p_buffer_size + 8, packet_flags);
-	encode_uint32(unique_id, &packet->data[0]); // Source ID
-	encode_uint32(target_peer, &packet->data[4]); // Dest ID
-	memcpy(&packet->data[8], p_buffer, p_buffer_size);
+	ENetPacket *packet = enet_packet_create(p_buffer, p_buffer_size, packet_flags);
+	//encode_uint32(unique_id, &packet->data[0]); // Source ID
+	//encode_uint32(target_peer, &packet->data[4]); // Dest ID
+	//memcpy(&packet->data[8], p_buffer, p_buffer_size);
 
 	if (is_server()) {
 		if (target_peer == 0) {
