@@ -208,7 +208,7 @@ void StreamPeer::put_string(const String &p_string) {
 
 void StreamPeer::put_utf8_string(const String &p_string) {
 	CharString cs = p_string.utf8();
-	put_u32(cs.length());
+	put_u16(cs.length());
 	put_data((const uint8_t *)cs.get_data(), cs.length());
 }
 
@@ -335,7 +335,7 @@ String StreamPeer::get_string(int p_bytes) {
 
 String StreamPeer::get_utf8_string(int p_bytes) {
 	if (p_bytes < 0) {
-		p_bytes = get_u32();
+		p_bytes = get_u16();
 	}
 	ERR_FAIL_COND_V(p_bytes < 0, String());
 

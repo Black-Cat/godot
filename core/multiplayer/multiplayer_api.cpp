@@ -145,7 +145,8 @@ void MultiplayerAPI::_process_packet(int p_from, const uint8_t *p_packet, int p_
 #endif
 
 	// Extract the `packet_type` from the LSB three bits:
-	uint8_t packet_type = p_packet[0] & CMD_MASK;
+	//uint8_t packet_type = p_packet[0] & CMD_MASK;
+	const uint8_t packet_type = NETWORK_COMMAND_RAW;
 
 	switch (packet_type) {
 		case NETWORK_COMMAND_SIMPLIFY_PATH: {
@@ -447,14 +448,14 @@ Error MultiplayerAPI::send_bytes(Vector<uint8_t> p_data, int p_to, Multiplayer::
 }
 
 void MultiplayerAPI::_process_raw(int p_from, const uint8_t *p_packet, int p_packet_len) {
-	ERR_FAIL_COND_MSG(p_packet_len < 2, "Invalid packet received. Size too small.");
+	//ERR_FAIL_COND_MSG(p_packet_len < 2, "Invalid packet received. Size too small.");
 
 	Vector<uint8_t> out;
-	int len = p_packet_len - 1;
+	int len = p_packet_len;
 	out.resize(len);
 	{
 		uint8_t *w = out.ptrw();
-		memcpy(&w[0], &p_packet[1], len);
+		memcpy(&w[0], &p_packet[0], len);
 	}
 	emit_signal(SNAME("peer_packet"), p_from, out);
 }

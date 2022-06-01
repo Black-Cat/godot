@@ -238,15 +238,16 @@ bool ENetMultiplayerPeer::_parse_client_event(ENetConnection::EventType p_type, 
 				}
 				_destroy_unused(p_event.packet);
 			} else {
-				if (p_event.packet->dataLength < 8) {
-					_destroy_unused(p_event.packet);
-					ERR_FAIL_V_MSG(false, "Invalid packet size");
-				}
+				//if (p_event.packet->dataLength < 8) {
+					//_destroy_unused(p_event.packet);
+					//ERR_FAIL_V_MSG(false, "Invalid packet size");
+				//}
 
-				uint32_t source = decode_uint32(&p_event.packet->data[0]);
+				//uint32_t source = decode_uint32(&p_event.packet->data[0]);
 				Packet packet;
 				packet.packet = p_event.packet;
-				packet.from = source;
+				//packet.from = source;
+				packet.from = 0;
 				packet.channel = p_event.channel_id;
 
 				packet.packet->referenceCount++;
