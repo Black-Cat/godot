@@ -215,7 +215,7 @@ bool ENetMultiplayerPeer::_parse_client_event(ENetConnection::EventType p_type, 
 			return true;
 		}
 		case ENetConnection::EVENT_RECEIVE: {
-			if (p_event.channel_id == SYSCH_CONFIG) {
+			/*if (p_event.channel_id == SYSCH_CONFIG) {
 				// Config message
 				if (p_event.packet->dataLength != 8) {
 					_destroy_unused(p_event.packet);
@@ -237,7 +237,7 @@ bool ENetMultiplayerPeer::_parse_client_event(ENetConnection::EventType p_type, 
 					} break;
 				}
 				_destroy_unused(p_event.packet);
-			} else {
+			} else {*/
 				//if (p_event.packet->dataLength < 8) {
 				//_destroy_unused(p_event.packet);
 				//ERR_FAIL_V_MSG(false, "Invalid packet size");
@@ -253,7 +253,7 @@ bool ENetMultiplayerPeer::_parse_client_event(ENetConnection::EventType p_type, 
 				packet.packet->referenceCount++;
 				incoming_packets.push_back(packet);
 				// Destroy packet later
-			}
+			//}
 			return false;
 		}
 		default:
